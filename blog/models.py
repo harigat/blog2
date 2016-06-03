@@ -12,3 +12,4 @@ class Post(models.Model):
 		self.save()
 	def __str__(self):
 		return self.title
+	#value of pk is automatically set in database
