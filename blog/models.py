@@ -27,5 +27,16 @@ class Comment(models.Model):
 		self.approved_comment=True
 		self.save()
 	
-	def __str__():
+	def __str__(self):
 		return self.text
+		
+class Contact(models.Model):
+	name=models.CharField(max_length=200)
+	email=models.EmailField()
+	message=models.TextField()
+	created_date=models.DateTimeField()
+	def create(self):
+		self.created_date=timezone.now()
+	def __str__(self):
+		return self.message
+	

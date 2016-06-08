@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post,Comment
+from .models import Post,Comment,Contact
 from django.utils import timezone
-from .forms import PostForm,CommentForm
+from .forms import PostForm,CommentForm,ContactForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
+from django.http import Http404
 # Create your views here.
 
 def post_list(request):
@@ -83,3 +84,15 @@ def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('blog.views.post_detail', pkk=comment.post.pk)
+	
+def contact(request):
+	if request.method=='POST':
+		form=ContactForm(request.POST)
+		if form.is_valid():
+			contact=form.save(commit=False)
+			contact.create()
+			contact.save()
+			return redirect('contact_url')
+	else:
+		form=ContactForm()
+	return render(request,'blog/contact.html',{'form':form})
